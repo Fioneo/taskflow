@@ -37,7 +37,7 @@ migrate-action:
 		-path /migrations \
 		-database postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}?sslmode=disable \
 		"$(action)"
-env-port-forward:
+env-port-forwarder:
 	@docker compose up -d port-forwarder
 env-port-down:
 	@docker compose down port-forwarder
