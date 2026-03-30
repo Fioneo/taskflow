@@ -82,8 +82,8 @@ func (h *UsersHTTPHandler) PathUser(w http.ResponseWriter, r *http.Request) {
 	responseHandler.JSONResponse(response, http.StatusOK)
 }
 func UserPatchFromRequest(request PatchUserRequest) domain.UserPatch {
-	return domain.UserPatch{
-		Fullname:    request.FullName.ToDomain(),
-		PhoneNumber: request.PhoneNumber.ToDomain(),
-	}
+	return domain.NewUserPatch(
+		request.FullName.ToDomain(),
+		request.PhoneNumber.ToDomain(),
+	)
 }

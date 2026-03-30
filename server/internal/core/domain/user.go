@@ -80,3 +80,9 @@ func (u *User) ApplyPatch(patch UserPatch) error {
 
 	return nil
 }
+func NewUserPatch(fullname Nulleable[string], phoneNumber Nulleable[string]) UserPatch {
+	return UserPatch{
+		Fullname:    fullname,
+		PhoneNumber: phoneNumber,
+	}
+}
