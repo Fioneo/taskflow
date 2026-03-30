@@ -7,11 +7,3 @@ type Route struct {
 	Path    string
 	Handler http.HandlerFunc
 }
-
-func NewRoute(method string, path string, handler http.HandlerFunc) Route {
-	return Route{
-		Method:  method,
-		Path:    path,
-		Handler: handler,
-	}
-}
