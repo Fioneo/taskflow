@@ -22,5 +22,8 @@ func (rw *ResponseWritter) WriteHeader(statusCode int) {
 	rw.statusCode = statusCode
 }
 func (rw *ResponseWritter) GetStatusCode() int {
+	if rw.statusCode == StatusCodeUnitialized {
+		return http.StatusOK
+	}
 	return rw.statusCode
 }
