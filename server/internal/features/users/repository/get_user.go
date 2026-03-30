@@ -14,7 +14,7 @@ func (r *UsersRepository) GetUser(ctx context.Context, id int) (domain.User, err
 	ctx, cancel := context.WithTimeout(ctx, r.dbpool.OpTimeOut())
 	defer cancel()
 	var userModel UserModel
-	query := `SELECT id, version, full_name, phone_number FROM taskflow.users WHERE id=$1`
+	query := `SELECT id, version, full_name, phone_number FROM taskflow.users WHERE id=$1;`
 
 	row := r.dbpool.QueryRow(ctx, query, id)
 
