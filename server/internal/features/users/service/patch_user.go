@@ -21,5 +21,5 @@ func (s *UsersService) PatchUser(ctx context.Context, id int, patch domain.UserP
 	if err != nil {
 		return domain.User{}, fmt.Errorf("failed to patch user: %w", err)
 	}
-	return patchedUser, err
+	return patchedUser, nil
 }
