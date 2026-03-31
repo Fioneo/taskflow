@@ -11,7 +11,7 @@ func (r *UsersRepository) CreateUser(ctx context.Context, user domain.User) (dom
 	ctx, cancel := context.WithTimeout(ctx, r.dbpool.OpTimeOut())
 	defer cancel()
 	var userModel UserModel
-	query := `INSERT INTO taskflow.users (full_name,phone_number) VALUES ($1,$2) RETURNING id,version,full_name,phone_number`
+	query := `INSERT INTO taskflow.users (full_name,phone_number) VALUES ($1,$2) RETURNING id,version,full_name,phone_number;`
 	row := r.dbpool.QueryRow(ctx, query, user.Fullname, user.PhoneNumber)
 
 	err := row.Scan(&userModel.ID, &userModel.Version, &userModel.FullName, &userModel.PhoneNumber)

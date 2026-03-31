@@ -22,7 +22,7 @@ func (r *UsersRepository) GetUser(ctx context.Context, id int) (domain.User, err
 
 	if err != nil {
 		if errors.Is(err, pgx.ErrNoRows) {
-			return domain.User{}, fmt.Errorf("user with id='%d': %w", id, core_errors.ErrNotFould)
+			return domain.User{}, fmt.Errorf("user with id='%d': %w", id, core_errors.ErrNotFound)
 		}
 		return domain.User{}, fmt.Errorf("get user by id: %w", err)
 	}

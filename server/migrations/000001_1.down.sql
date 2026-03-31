@@ -1,3 +1,3 @@
-DROP TABLE taskflow.users
-DROP TABLE taskflow.tasks
-DROP SHEMA taskflow
+DROP SCHEMA taskflow;
+DROP TABLE taskflow.users;
+DROP TABLE taskflow.tasks;

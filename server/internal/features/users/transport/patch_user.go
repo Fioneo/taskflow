@@ -49,7 +49,7 @@ func (r *PatchUserRequest) Validate() error {
 
 type PatchUserResponse UserDTOResponse
 
-func (h *UsersHTTPHandler) PathUser(w http.ResponseWriter, r *http.Request) {
+func (h *UsersHTTPHandler) PatchUser(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	log := core_logger.FromContext(ctx)
 
