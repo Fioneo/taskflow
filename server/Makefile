@@ -10,6 +10,7 @@ env-cleanup:
 	if [ "$$ans" = "y" ]; then \
 		docker compose down db port-forwarder&& \
 		rm -rf postgres_data && \
+		rm -rf logs && \
 		echo "Successful container clean-up"; \
 	else \
 		echo "Clean up canceled"; \
