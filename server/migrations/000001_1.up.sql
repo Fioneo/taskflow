@@ -13,10 +13,10 @@ CREATE TABLE taskflow.users(
 CREATE TABLE taskflow.tasks(
     id SERIAL PRIMARY KEY,
     version int NOT NULL DEFAULT 1,
-    title varchar(100) NOT NULL CHECK(char_length(title) BETWEEN 1 AND 100),
+    title varchar(100) NOT NULL CHECK(char_length(title) BETWEEN 1 AND 30),
     description varchar(100) CHECK(char_length(description) BETWEEN 1 AND 100),
     completed BOOLEAN NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     completed_at TIMESTAMPTZ ,
 
     CHECK(
@@ -25,5 +25,5 @@ CREATE TABLE taskflow.tasks(
         (completed=TRUE AND completed_at IS NOT NULL AND completed_at >= created_at)
     ),
 
-    author_user_id INTEGER NOT NULL REFERENCES taskflow.users(id)
+    author_id INTEGER NOT NULL REFERENCES taskflow.users(id)
 );
