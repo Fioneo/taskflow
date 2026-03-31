@@ -6,7 +6,7 @@ type UsersRepository struct {
 	dbpool *core_postgres_pool.Pool
 }
 
-func NewUserRepostory(dbpool *core_postgres_pool.Pool) *UsersRepository {
+func NewUsersRepostory(dbpool *core_postgres_pool.Pool) *UsersRepository {
 	return &UsersRepository{
 		dbpool: dbpool,
 	}

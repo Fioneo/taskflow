@@ -13,7 +13,7 @@ func (r *UsersRepository) GetUsers(ctx context.Context, limit *int, offset *int)
 
 	var userModels []UserModel
 
-	query := `SELECT id, version, full_name, phone_number FROM taskflow.users ORDER BY id ASC LIMIT $1 OFFSET $2`
+	query := `SELECT id, version, full_name, phone_number FROM taskflow.users ORDER BY id ASC LIMIT $1 OFFSET $2;`
 
 	rows, err := r.dbpool.Query(ctx, query, limit, offset)
 	if err != nil {
@@ -40,7 +40,7 @@ func (r *UsersRepository) GetUsers(ctx context.Context, limit *int, offset *int)
 		return nil, fmt.Errorf("next rows: %w", err)
 	}
 
-	userDomains := userDomainFromModels(userModels)
+	userDomains := userDomainsFromModels(userModels)
 
 	return userDomains, nil
 }
