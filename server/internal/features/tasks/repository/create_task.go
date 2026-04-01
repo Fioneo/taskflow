@@ -59,7 +59,7 @@ func (r *TasksRepository) CreateTask(ctx context.Context, task domain.Task) (dom
 		if errors.As(err, &pgErr) {
 			switch pgErr.Code {
 			case "23503":
-				return domain.Task{}, fmt.Errorf("foreign key violation:user with id='%d' not found : %w", task.ID, err)
+				return domain.Task{}, fmt.Errorf("foreign key violation:user with id='%d' not found : %w", task.AuthorID, err)
 			}
 		}
 		return domain.Task{}, fmt.Errorf("scan error: %w", err)

@@ -52,6 +52,18 @@ func NewTaskUninitialized(title string, description *string, authorID int) Task 
 		authorID,
 	)
 }
+func (t *Task) CompletionDuration() *time.Duration {
+	if !t.Completed {
+		return nil
+	}
+	if t.CompletedAt == nil {
+		return nil
+	}
+
+	duration := t.CompletedAt.Sub(t.CreatedAt)
+
+	return &duration
+}
 func (t *Task) Validate() error {
 	titleLength := len([]rune(t.Title))
 	if titleLength < 1 || titleLength > 30 {
@@ -67,7 +79,7 @@ func (t *Task) Validate() error {
 	}
 
 	if t.AuthorID < 1 {
-		return fmt.Errorf("authorID must be bigger then 0: %w", core_errors.ErrInvalidArgument)
+		return fmt.Errorf("authorID must be bigger than 0: %w", core_errors.ErrInvalidArgument)
 	}
 
 	if t.Completed {
@@ -87,15 +99,15 @@ func (t *Task) Validate() error {
 }
 
 type TaskPatch struct {
-	Title       Nulleable[string]
-	Description Nulleable[string]
-	Completed   Nulleable[bool]
+	Title       Nullable[string]
+	Description Nullable[string]
+	Completed   Nullable[bool]
 }
 
 func NewTaskPatch(
-	title Nulleable[string],
-	description Nulleable[string],
-	completed Nulleable[bool],
+	title Nullable[string],
+	description Nullable[string],
+	completed Nullable[bool],
 ) TaskPatch {
 	return TaskPatch{
 		Title:       title,
@@ -105,7 +117,7 @@ func NewTaskPatch(
 }
 func (p *TaskPatch) Validate() error {
 	if p.Title.Set && p.Title.Value == nil {
-		return fmt.Errorf("'Title'can't be patched to null: %w", core_errors.ErrInvalidArgument)
+		return fmt.Errorf("'Title' can't be patched to null: %w", core_errors.ErrInvalidArgument)
 	}
 	if p.Completed.Set && p.Completed.Value == nil {
 		return fmt.Errorf("'Completed' can't be patched null: %w", core_errors.ErrInvalidArgument)
@@ -135,7 +147,7 @@ func (t *Task) ApplyPatch(patch TaskPatch) error {
 			tmp.CompletedAt = nil
 		}
 	}
-	fmt.Println(tmp)
+
 	if err := tmp.Validate(); err != nil {
 		return fmt.Errorf("Validate patched task: %w", err)
 	}

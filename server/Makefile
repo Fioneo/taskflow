@@ -8,7 +8,7 @@ env-down:
 env-cleanup:
 	@read -p "Clean up all environmental files? [Y/n]: " ans; \
 	if [ "$$ans" = "y" ]; then \
-		docker compose down db port-forwarder&& \
+		docker compose down db port-forwarder && \
 		rm -rf postgres_data && \
 		rm -rf logs && \
 		echo "Successful container clean-up"; \
