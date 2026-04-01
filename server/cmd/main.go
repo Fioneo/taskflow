@@ -12,6 +12,9 @@ import (
 	core_postgres_pool "github.com/Fioneo/taskflow/internal/core/repository/pool"
 	core_http_middleware "github.com/Fioneo/taskflow/internal/core/transport/http/middleware"
 	core_http_server "github.com/Fioneo/taskflow/internal/core/transport/http/server"
+	statistics_repository "github.com/Fioneo/taskflow/internal/features/statistics/repository"
+	statistics_service "github.com/Fioneo/taskflow/internal/features/statistics/service"
+	statistics_transport "github.com/Fioneo/taskflow/internal/features/statistics/transport"
 	tasks_repository "github.com/Fioneo/taskflow/internal/features/tasks/repository"
 	tasks_service "github.com/Fioneo/taskflow/internal/features/tasks/service"
 	tasks_transport "github.com/Fioneo/taskflow/internal/features/tasks/transport"
@@ -54,7 +57,7 @@ func main() {
 
 	logger.Debug("Initializing feature", zap.String("feature", "users"))
 
-	usersRepo := users_repository.NewUsersRepostory(dbpool)
+	usersRepo := users_repository.NewUsersRepository(dbpool)
 	usersService := users_service.NewUsersService(usersRepo)
 	usersTransportHTTP := users_transport.NewUsersHTTPHandler(usersService)
 
@@ -63,6 +66,12 @@ func main() {
 	tasksRepo := tasks_repository.NewTasksRepository(dbpool)
 	tasksService := tasks_service.NewTasksService(tasksRepo)
 	tasksTransportHTTP := tasks_transport.NewTasksHTTPHandler(tasksService)
+
+	logger.Debug("Initializing feature", zap.String("feature", "statistics"))
+
+	statisticsRepo := statistics_repository.NewStatisticsRepository(dbpool)
+	statisticsService := statistics_service.NewStatisticsService(statisticsRepo)
+	statisticsTransportHTTP := statistics_transport.NewStatisticsHTTPHandler(statisticsService)
 
 	logger.Debug("Initializing HTTP server")
 
@@ -78,6 +87,7 @@ func main() {
 	apiVersionRouter := core_http_server.NewApiVersionRouter(core_http_server.ApiVersion1)
 	apiVersionRouter.RegisterRoutes(usersTransportHTTP.Routes()...)
 	apiVersionRouter.RegisterRoutes(tasksTransportHTTP.Routes()...)
+	apiVersionRouter.RegisterRoutes(statisticsTransportHTTP.Routes()...)
 
 	httpServer.RegisterApiRoutes(apiVersionRouter)
 
