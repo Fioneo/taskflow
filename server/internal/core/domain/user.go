@@ -47,8 +47,8 @@ func (u *User) Validate() error {
 }
 
 type UserPatch struct {
-	Fullname    Nulleable[string]
-	PhoneNumber Nulleable[string]
+	Fullname    Nullable[string]
+	PhoneNumber Nullable[string]
 }
 
 func (p *UserPatch) Validate() error {
@@ -80,7 +80,7 @@ func (u *User) ApplyPatch(patch UserPatch) error {
 
 	return nil
 }
-func NewUserPatch(fullname Nulleable[string], phoneNumber Nulleable[string]) UserPatch {
+func NewUserPatch(fullname Nullable[string], phoneNumber Nullable[string]) UserPatch {
 	return UserPatch{
 		Fullname:    fullname,
 		PhoneNumber: phoneNumber,
