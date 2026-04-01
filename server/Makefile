@@ -47,3 +47,7 @@ taskflow-run:
 	export POSTGRES_HOST=localhost && \
 	go mod tidy && \
 	go run cmd/*.go
+taskflow-deploy:
+	@docker compose up -d --build taskflow
+taskflow-stop:
+	@docker compose down taskflow
