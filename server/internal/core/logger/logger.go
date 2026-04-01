@@ -26,7 +26,7 @@ func FromContext(ctx context.Context) *Logger {
 func NewLogger(config LoggerConfig) (*Logger, error) {
 	zapLvl := zap.NewAtomicLevel()
 	if err := zapLvl.UnmarshalText([]byte(config.Level)); err != nil {
-		return nil, fmt.Errorf("umarshal log level: %w", err)
+		return nil, fmt.Errorf("unmarshal log level: %w", err)
 	}
 
 	if err := os.MkdirAll(config.Folder, 0755); err != nil {

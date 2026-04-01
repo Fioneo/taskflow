@@ -21,7 +21,7 @@ func (s *TasksService) GetTasks(ctx context.Context, limit, offset, userID *int)
 	}
 	if userID != nil {
 		if *userID <= 0 {
-			return nil, fmt.Errorf("userID must be bigger then 0: %w", core_errors.ErrInvalidArgument)
+			return nil, fmt.Errorf("userID must be bigger than 0: %w", core_errors.ErrInvalidArgument)
 		}
 	}
 
